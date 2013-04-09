@@ -35,7 +35,7 @@ from bs4 import BeautifulSoup
 
 city_id = 4690      # id вашего города на gismeteo.ru, по-умолчанию - Новосибирск
 get_weekly = True   # загружать ли прогноз на 2 недели
-days_limit = 4      # сколько дней прогноза сохранять в файл
+days_limit = 9      # сколько дней прогноза сохранять в файл
 
 # Получение текущей погоды
 
@@ -69,7 +69,7 @@ days = soup.select("#weather-weekly div.rframe.wblock.wdata div.wbshort table")
 
 with codecs.open(os.path.join(os.path.dirname(__file__), "forecast.txt"), "w", "utf-8") as forecast_file:
     for day in days[:days_limit]:
-        day_date = day.select("td.workday") or day.select("td.weekend")
+        day_date = day.select("td.workday .s_date") or day.select("td.weekend .s_date")
         day_temp = [d.string for d in day.select("td.temp span.value.m_temp.c")]
         if day_temp:
-            forecast_file.write(u"%s %4s/%s\n" % (day_date[0].contents[0], day_temp[0], day_temp[1]))
+            forecast_file.write(u"%s: %4s/%s\n" % (day_date[0].contents[0].rjust(5), day_temp[0], day_temp[1]))

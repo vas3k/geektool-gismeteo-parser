@@ -50,9 +50,9 @@ if temp_elem:
 
 if cloudness_elem:
     cloudness = cloudness_elem[0]["title"]
-    icon = cloudness_elem[0]["style"][22:-1]
+    icon = cloudness_elem[0]["style"][24:-1]
     if icon:
-        urllib.urlretrieve(icon, os.path.join(os.path.dirname(__file__), "weather.jpg"))
+        urllib.urlretrieve("http://"+icon, os.path.join(os.path.dirname(__file__), "weather.jpg"))
 
 with codecs.open(os.path.join(os.path.dirname(__file__), "weather.txt"), "w", "utf-8") as weather_file:
     if temp:

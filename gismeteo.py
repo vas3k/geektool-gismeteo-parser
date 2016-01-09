@@ -38,8 +38,10 @@ get_weekly = True   # загружать ли прогноз на 2 недели
 days_limit = 9      # сколько дней прогноза сохранять в файл
 
 # Получение текущей погоды
+req  = urllib2.Request("http://www.gismeteo.ru/city/weekly/%s/" % city_id);
+req.add_header("User-Agent", "Firefox/3.5.8")
 
-page = urllib2.urlopen("http://www.gismeteo.ru/city/weekly/%s/" % city_id).read()
+page = urllib2.urlopen(req).read()
 soup = BeautifulSoup(page)
 
 temp_elem = soup.select("dd.value.m_temp.c")
